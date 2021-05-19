@@ -10,9 +10,9 @@ const app = express();
 
 // Configuring Cloudinary
 cloudinary.config({
-	cloud_name: process.env.CLOUDINARY_NAME,
-	api_key: process.env.CLOUDINARY_API_KEY,
-	api_secret: process.env.CLOUDINARY_API_SECRET,
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 // Setting View Engine
@@ -20,21 +20,21 @@ app.set("view engine", "ejs");
 
 // Defining Routes
 app.get("/", (req, res) => {
-	res.render("index.ejs", {
-		message: "",
-		image: "https://source.unsplash.com/random/500x500",
-	});
+    res.render("index.ejs", {
+        message: "",
+        image: "https://source.unsplash.com/random/500x500",
+    });
 });
 
 app.post("/", upload.single("avatar"), (req, res) => {
-	cloudinary.uploader.upload(req.file.path, (err, data) => {
-		if (err)
-			return res.render("index.ejs", {
-				message: err.message,
-				image: "https://source.unsplash.com/random/500x500",
-			});
-		res.render("index.ejs", { message: "Image Uploaded!", image: data.secure_url });
-	});
+    cloudinary.uploader.upload(req.file.path, (err, data) => {
+        if (err)
+            return res.render("index.ejs", {
+                message: err.message,
+                image: "https://source.unsplash.com/random/500x500",
+            });
+        res.render("index.ejs", { message: "Image Uploaded!", image: data.secure_url });
+    });
 });
 
 // Starting App
